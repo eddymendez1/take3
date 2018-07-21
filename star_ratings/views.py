@@ -10,6 +10,7 @@ from . import app_settings, get_star_ratings_rating_model
 from .compat import is_authenticated
 import json
 
+#From https://github.com/wildfish/django-star-ratings
 
 class Rate(View):
     model = get_star_ratings_rating_model()
