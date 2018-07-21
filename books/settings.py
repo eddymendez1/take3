@@ -138,3 +138,6 @@ MEDIA_ROOT = os.path.join(os.path.dirname(BASE_DIR), "static_cdn", "media_root")
 #MEDIA_ROOT = '/repos/src/github.com/take2/static_cdn/media_root'
 
 AUTH_PROFILE_MODULE = 'profile.Profile'
+
+AUTH_CC_MODULE = 'profile.Credit_Cards'
+AUTH_Shipping_MODULE = 'profile.Shipping_Addresses'

@@ -1,6 +1,7 @@
 from django.shortcuts import render
 from django.views.generic import ListView
 from products.models import Product
+from star_ratings.models import UserRating
 from django.db.models import F
 
 class SearchProductView(ListView):
@@ -75,21 +76,21 @@ class SearchProductView(ListView):
         
         elif query3 is not None:
             if query4 is not None and query4=="titleASC":
-                return Product.objects.filter(rate=query3).order_by(F("title").asc())
+                return Product.objects.filter(rates=query3).order_by(F("title").asc())
             elif query4 is not None and query4=="titleDESC":
-            	return Product.objects.filter(rate=query3).order_by(F("title").desc())
+            	return Product.objects.filter(rates=query3).order_by(F("title").desc())
             elif query4 is not None and query4=="authorASC":
-                return Product.objects.filter(rate=query3).order_by(F("author").asc())
+                return Product.objects.filter(rates=query3).order_by(F("author").asc())
             elif query4 is not None and query4=="authorDESC":
-            	return Product.objects.filter(rate=query3).order_by(F("author").desc())
+            	return Product.objects.filter(rates=query3).order_by(F("author").desc())
             elif query4 is not None and query4=="priceLH":
-                return Product.objects.filter(rate=query3).order_by(F("price").asc())
+                return Product.objects.filter(rates=query3).order_by(F("price").asc())
             elif query4 is not None and query4=="priceHL":
-            	return Product.objects.filter(rate=query3).order_by(F("price").desc())
+            	return Product.objects.filter(rates=query3).order_by(F("price").desc())
             elif query4 is not None and query4=="rateHL":
-                return Product.objects.filter(rate=query3).order_by(F("rate").asc())
+                return Product.objects.filter(rates=query3).order_by(F("rate").asc())
             elif query4 is not None and query4=="rateLH":
-            	return Product.objects.filter(rate=query3).order_by(F("rate").desc())
-            return Product.objects.filter(rate=query3)
+            	return Product.objects.filter(rates=query3).order_by(F("rate").desc())
+            return Product.objects.filter(rates=query3)
         
         return Product.objects.none()

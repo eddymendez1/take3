@@ -13,6 +13,7 @@
    {% endif %}
     <div class="card-body">
       <h5 class="card-title">{{ instance.title }}</h5>
+      <h6>By {{ instance.author }}</h6>
       <p class="card-text">{{ instance.description|truncatechars:50 }}</p>
       <h5>Customer's Rating</h5>
     <span class="fa fa-star checked"></span>
