@@ -1,0 +1,88 @@
+{% extends "base.html" %}
+
+{% block content %}
+<div class="container">
+	<div class='row mb-3'>
+	{% if request.GET.q %}
+		<div class = 'col-12'>
+			Searched for <b>{{ request.GET.q }}</b>
+			<hr/>
+		</div>
+		{% else %}
+		<div class='col-12'>
+			<hr>
+		</div>
+
+		{% endif %}
+		<nav>
+		<a>Sort By:</a>
+		<a onclick="redirectTo();" name="Title">Title A-Z</a> |
+		<a onclick="redirectTo1();" name="Title">Title Z-A</a> |
+		<a onclick="redirectTo2();" name="Author">Author A-Z</a> |
+		<a onclick="redirectTo3();" name="Author">Author Z-A</a> |
+		<a onclick="redirectTo4();" name="Price">Price Low-High</a> |
+		<a onclick="redirectTo5();" name="Price">Price High-Low</a> |
+		<a onclick="redirectTo6();" name="Rating">Rating High-Low</a> |
+		<a onclick="redirectTo7();" name="Rating">Rating Low-High</a>
+		</nav>
+		<script>
+    		function redirectTo(){
+    			updateQuery('titleASC'); 			
+    		}
+    		function redirectTo1(){
+    			updateQuery('titleDESC'); 			
+    		}
+    		function redirectTo2(){
+    			updateQuery('authorASC');
+    		}
+    		function redirectTo3(){
+    			updateQuery('authorDESC');
+    		}
+    		function redirectTo4(){
+    			updateQuery('priceLH');
+    		}
+    		function redirectTo5(){
+    			updateQuery('priceHL');
+    		}
+    		function redirectTo6(){
+    			updateQuery('rateHL');
+    		}
+    		function redirectTo7(){
+    			updateQuery('rateLH');
+    		}
+    		function redirectTo8(){
+    			updateQuery('title');
+    		}
+    		function updateQuery(value) {
+    			var url = window.location.href;
+    			var index = url.lastIndexOf('&s=');
+    			if(index != -1){
+    				var res = url.slice(0, index);
+    				window.location.href = res+"&s="+value;
+    			}
+    			else{
+    				var res = url;
+    				window.location.href = res+"&s="+value;
+    			}
+
+		    }
+
+    	</script>
+	</div>
+
+	<div class='row'>
+
+	{% for obj in object_list %}
+	<div class='col'>
+
+		{% include 'products/snippets/card.html' with instance=obj %}
+		{% if forloop.counter|divisibleby:4 %}
+		</div> </div><div class='row'><div class='col-12'><hr/></div>
+		{% else %}
+		</div>
+		{% endif %}
+
+	{% endfor %}
+</div>
+</div>
+{% endblock %} 
