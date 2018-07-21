@@ -1,8 +1,9 @@
 from django.http import Http404
 from django.views.generic import ListView, DetailView
-from django.shortcuts import render, get_object_or_404
+from django.shortcuts import render, get_object_or_404, redirect
 from .models import Product
 from carts.models import Cart
+from books.forms import CommentForm
 
 class ProductFeaturedListView(ListView):
 	template_name = "products/list.html"
@@ -139,6 +140,22 @@ def product_detail_view(request, pk=None, *args, **kwargs):
 
 def update_quantity(request, pk=None, *args, **kwargs):
 	print(request)
+
+
+
+def add_comment_to_post(request, pk):
+    post = get_object_or_404(Product, pk=pk)
+    if request.method == "POST":
+        form = CommentForm(request.POST)
+        if form.is_valid():
+            comment = form.save(commit=False)
+            comment.post = post
+            comment.save()
+
+            return redirect('list')
+    else:
+        form = CommentForm()
+    return render(request, 'products/add_comment_to_post.html', {'form': form})
 
 
 # def change_product_quantity(request)

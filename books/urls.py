@@ -44,5 +44,6 @@ urlpatterns = [
     url(r'^search/', include(('search.urls', 'search'), namespace='search')),
     url(r'^profiles/', include("profiles.urls", namespace=None)),
     url(r'^admin/', admin.site.urls),
+    url(r'^ratings/', include('star_ratings.urls', namespace='ratings')),
 ] + static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)
 

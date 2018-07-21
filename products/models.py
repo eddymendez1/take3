@@ -4,6 +4,7 @@ from django.db import models
 from django.db.models.signals import pre_save
 from .utils import unique_slug_generator
 from django.urls import reverse
+from django.utils import timezone
 
 def get_filename_ext(filepath):
 	base_name = os.path.basename(filepath)
@@ -29,7 +30,6 @@ class Product(models.Model):
 	slug		= models.SlugField(blank=True, unique=True)
 	genre		= models.CharField(max_length=120, default='Unknown')
 	description = models.TextField()
-	rate		= models.IntegerField(default=0, max_length=5)
 	price		= models.DecimalField(decimal_places=2, max_digits=10, default=100.00)
 	image		= models.ImageField(upload_to=upload_image_path, null=True, blank=True)
 	#image		= models.FileField(upload_to='products/', null=True, blank=True)
@@ -51,3 +51,17 @@ def product_pre_save_receiver(sender, instance, *args, **kwargs):
 		instance.slug = unique_slug_generator(instance)
 
 pre_save.connect(product_pre_save_receiver, sender=Product)
+
+
+class Comment(models.Model):
+    author = models.CharField(max_length=200)
+    text = models.TextField()
+    created_date = models.DateTimeField(default=timezone.now)
+    approved_comment = models.BooleanField(default=False)
+
+    def approve(self):
+        self.approved_comment = True
+        self.save()
+
+    def __str__(self):
+        return self.text

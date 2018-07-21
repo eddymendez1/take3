@@ -2,7 +2,7 @@ from django import forms
 from django.contrib.auth import get_user_model
 from django.core.validators import validate_email
 from django.core.exceptions import ValidationError
-
+from products.models import Comment
 User = get_user_model()
 
 def validateEmail(email):
@@ -67,3 +67,8 @@ class RegisterForm(forms.Form):
 			raise forms.ValidationError("Passwords must match.")
 		return data
 
+class CommentForm(forms.ModelForm):
+
+    class Meta:
+        model = Comment
+        fields = ('author', 'text',)
