@@ -1,0 +1,63 @@
+<!doctype html>
+<html lang="en">
+{% extends "base.html" %}
+{% block title %}<h1>Profile Page</h1>{% endblock title %}
+{% load static %}
+{% block content %}
+<br><br>
+  <head>
+    <!-- Required meta tags -->
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+  </head>
+  <body>
+{% if object.nick_name %}
+<div class='container'>
+    <div class='row'>
+        <div class='col'>
+	        <img src='{{ object.image.url }}' class='img-fluid' width="150" height="150"/> <br/>
+            <p>{{ content|linebreaks }}</p>
+        </div>
+    </div>
+
+    <div class="profile-detail">
+        <h2>{{ user.get_full_name }}</h2>
+        <!--<form method="post">-->
+          <!--{% csrf_token %}-->
+          <!--{{ user_form.as_p }}-->
+          <!--{{ profile_form.as_p }}-->
+          <!--<button type="submit">Save changes</button>-->
+        <!--</form>-->
+       <ul>
+            <li>Nick-Name:  {{ object.nick_name }}</li>
+            <li>Email:  {{ user.email }}</li>
+            <li>Home addr:  {{ object.home_addr }}</li>
+            <li>Address 1: {{ object.address_1 }}</li>
+            <li>Address 2: {{ object.address_2 }}</li>
+            <li>City: {{ object.city }}</li>
+            <li>State: {{ object.state }}</li>
+            <li>Zip code: {{ object.zip_code }}</li>
+       </ul>
+    </div>
+
+    <div class="span2">
+        <div class="btn-group">
+            <a class="btn dropdown-toggle btn-info" data-toggle="dropdown" href="#">
+                Action
+                <span class="icon-cog icon-white"></span><span class="caret"></span>
+            </a>
+            <ul class="dropdown-menu">
+                <li><a href="#"><span class="icon-wrench"></span> Modify</a></li>
+                <li><a href="#"><span class="icon-trash"></span> Delete</a></li>
+            </ul>
+        </div>
+    </div>
+
+</div>
+{% else %}
+<p class='lead'>Looks like you profile hasn't been set-up</p>
+
+{% endif %}
+{% endblock %}
+
+

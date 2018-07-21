@@ -2,6 +2,8 @@
 {% url 'products' as product_list_url %}
 {% url 'contact' as contact_url %}
 {% url 'about' as about_url %}
+{% url 'profiles:views' as profile_views %}
+{% url 'profiles:create' as profile_create %}
 {% load static %}
 
 <nav class="navbar navbar-expand-lg navbar navbar-dark bg-dark">
@@ -53,13 +55,26 @@
       <li class="nav-item {% if request.path == about_url %}active{% endif %}">
         <a class="nav-link " href="{{ about_url }}">About</a>
       </li>
-      <li class="nav-item {% if request.path == about_url %}active{% endif %}">
+      <li class="nav-item {% if request.path == cart_url %}active{% endif %}">
         <a class="nav-link " href="/cart/"> <i class="fas fa-shopping-cart"></i></a>
       </li>
+		{% if request.user.is_authenticated %}
+            <!--User Profile(self) -->
+            {% if user.profile.nick_name  %}
+            <li class="nav-item {% if request.path == profile_views %}active{% endif %}">
+            <a class="nav-link " href="/profiles/{{ user.profile.slug }}">Profile</a>
+            </li>
+            {% else %}
+              <!-- Create Profile link -->
+              <li class="nav-item {% if request.path == profile_create %}active{% endif %}">
+                <a class="nav-link " href="/profiles/"> <i class="fas fa-profile"></i>Create Profile</a>
+              </li>
+            {% endif %}
+        {% endif %}
     </ul>
     <form class="form-inline my-2 my-lg-0">
       {% if request.user.is_authenticated %}
-      <a class="nav-link " href="{% url 'login' %}">Log-out</a>
+      <a class="nav-link " href="{% url 'logout' %}">Log-out</a>
       {% else %}	
       <a class="nav-link " href="{% url 'login' %}">Log-in</a>
       <a class="nav-link " href="{% url 'register' %}">Register</a>

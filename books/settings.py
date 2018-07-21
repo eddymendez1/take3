@@ -39,6 +39,7 @@ INSTALLED_APPS = [
     'django.contrib.staticfiles',
 
     'carts',
+    'profiles',
     'products',
     'search',
     'wishlist',
@@ -134,3 +135,5 @@ MEDIA_URL = '/media/'
 MEDIA_ROOT = os.path.join(os.path.dirname(BASE_DIR), "static_cdn", "media_root")
 
 #MEDIA_ROOT = '/repos/src/github.com/take2/static_cdn/media_root'
+
+AUTH_PROFILE_MODULE = 'profile.Profile'

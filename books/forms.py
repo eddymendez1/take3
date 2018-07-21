@@ -1,7 +1,16 @@
 from django import forms
 from django.contrib.auth import get_user_model
+from django.core.validators import validate_email
+from django.core.exceptions import ValidationError
 
 User = get_user_model()
+
+def validateEmail(email):
+    try:
+        validate_email(email)
+        return True
+    except ValidationError:
+        return False
 
 class ContactForm(forms.Form):
 	fullname = forms.CharField(widget=forms.TextInput(attrs={"class":"form-control", "placeholder": "Full name"}))
@@ -10,9 +19,15 @@ class ContactForm(forms.Form):
 
 	def clean_email(self):
 		email = self.cleaned_data.get("email")
-		if not "fiu.edu" in email:
-			raise forms.ValidationError("Please enter your fiu email.")
-		return email
+		qs = User.objects.filter(email=email)
+		if qs.exists():
+			raise forms.ValidationError("email is taken")
+		else:
+			if (validateEmail(email) == True):
+
+				return email
+			else:
+				raise forms.ValidationError("inncorrect email format")
 
 
 class LoginForm(forms.Form):
@@ -37,7 +52,12 @@ class RegisterForm(forms.Form):
 		qs = User.objects.filter(email=email)
 		if qs.exists():
 			raise forms.ValidationError("email is taken")
-		return email
+		else:
+			if (validateEmail(email) == True):
+
+				return email
+			else:
+				raise forms.ValidationError("inncorrect email format")
 
 	def clean(self):
 		data = self.cleaned_data

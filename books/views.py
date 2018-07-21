@@ -1,4 +1,4 @@
-from django.contrib.auth import authenticate, login, get_user_model
+from django.contrib.auth import authenticate, login, get_user_model, logout
 from django.http import HttpResponse
 from django.shortcuts import render, redirect
 
@@ -76,4 +76,18 @@ def register_page(request):
 		password = form.cleaned_data.get("password")
 		new_user = User.objects.create_user(username, email, password)
 		print(new_user)
+		if username is not None:
+			# Redirect to a success page.
+			return redirect("/login")
+		else:
+			# Return an 'invalid login' error message.
+			print("Error")
 	return render(request, "auth/register.html", context )
+
+def logout_page(request):
+    context = {
+        "title": "Log out Successful",
+        "content": "You have logged off.",
+    }
+    logout(request)
+    return render(request, "home_page.html", context)

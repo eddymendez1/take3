@@ -20,8 +20,9 @@ from django.contrib import admin
 from django.views.generic import TemplateView
 
 from carts.views import *
+from profiles.views import *
 
-from .views import home_page, about_page, contact_page, login_page, register_page
+from .views import home_page, about_page, contact_page, login_page, register_page, logout_page
 
 # urlpatterns = [
 #     url(r'^$', home_page),
@@ -35,11 +36,13 @@ urlpatterns = [
     url(r'^about/$', about_page, name='about'),
     url(r'^contact/$', contact_page, name='contact'),
     url(r'^login/$', login_page, name = 'login'),
+    url(r'^logout/$', logout_page, name='logout'),
     url(r'^cart/', include(("carts.urls",'carts'), namespace='cart')),
     url(r'^register/$', register_page, name='register'),
     url(r'^bootstrap/$', TemplateView.as_view(template_name='bootstrap/example.html')),
     url(r'^products/', include("products.urls", namespace=None)),
     url(r'^search/', include(('search.urls', 'search'), namespace='search')),
+    url(r'^profiles/', include("profiles.urls", namespace=None)),
     url(r'^admin/', admin.site.urls),
 ] + static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)
 
